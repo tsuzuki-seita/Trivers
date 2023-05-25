@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     // PlayerのAnimator
-    //public Animator playerAnimator;
+    public Animator playerAnimator;
     // PlayerのRigidbody
-    public Rigidbody playerRigidbody;
+    public Rigidbody2D playerRigidbody;
 
     // 以下変数
     // 移動速度の速さを指定
@@ -44,6 +44,19 @@ public class PlayerManager : MonoBehaviour
             float direction = Mathf.Sign(horizontalInput);
             // キャラの向きをキーの押された方向に指定する
             transform.localScale = new Vector3(defaultLocalScale.x * direction, defaultLocalScale.y, defaultLocalScale.z);
+            // アニメーションの再生
+            playerAnimator.SetTrigger("walk");
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            // アニメーションの再生
+            playerAnimator.SetTrigger("attack");
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            // アニメーションの再生
+            playerAnimator.SetTrigger("casting");
         }
     }
 }
