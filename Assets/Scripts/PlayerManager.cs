@@ -7,13 +7,24 @@ public class PlayerManager : MonoBehaviour
     // PlayerのAnimator
     public Animator playerAnimator;
     // PlayerのRigidbody
-    public Rigidbody2D playerRigidbody;
+    public Rigidbody playerRigidbody;
 
     // 以下変数
     // 移動速度の速さを指定
     public float maxSpeed = 9f;
     // PlayerSpriteの初期サイズを保存する変数
     Vector3 defaultLocalScale;
+
+    public enum MyState
+    {
+        Idle,
+        Walk,
+        Attack,
+        Casting,
+        hurt
+    };
+
+    MyState state = MyState.Idle;
 
     // Start is called before the first frame update
     void Start()
@@ -44,19 +55,42 @@ public class PlayerManager : MonoBehaviour
             float direction = Mathf.Sign(horizontalInput);
             // キャラの向きをキーの押された方向に指定する
             transform.localScale = new Vector3(defaultLocalScale.x * direction, defaultLocalScale.y, defaultLocalScale.z);
-            // アニメーションの再生
-            playerAnimator.SetTrigger("walk");
+            state = MyState.Walk;
         }
+
+        playerAnimator.SetFloat("Horizontal", horizontalInput);
+        playerAnimator.SetFloat("Vertical", verticalInput);
+
 
         if (Input.GetMouseButtonDown(0))
         {
-            // アニメーションの再生
-            playerAnimator.SetTrigger("attack");
+            if (state != MyState.Attack)
+            {
+                // アニメーションの再生
+                playerAnimator.SetTrigger("attack");
+                playerRigidbody.velocity = Vector2.zero;
+                state = MyState.Attack;
+            }
         }
+        if (Input.GetMouseButtonUp(0))
+        {
+            state = MyState.Idle;
+        }
+
         if (Input.GetMouseButtonDown(1))
         {
-            // アニメーションの再生
-            playerAnimator.SetTrigger("casting");
+            if (state != MyState.Casting)
+            {
+                // アニメーションの再生
+                playerAnimator.SetTrigger("casting");
+                playerRigidbody.velocity = Vector2.zero;
+                state = MyState.Casting;
+            }
+
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            state = MyState.Idle;
         }
     }
 }
