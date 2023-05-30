@@ -9,6 +9,8 @@ public class PlayerManager : MonoBehaviour
     // PlayerのRigidbody
     public Rigidbody playerRigidbody;
 
+    public BoxCollider sword;
+
     // 以下変数
     // 移動速度の速さを指定
     public float maxSpeed = 9f;
@@ -31,6 +33,8 @@ public class PlayerManager : MonoBehaviour
     {
         // 初期状態でPlayerの大きさを保存
         defaultLocalScale = transform.localScale;
+
+        sword.enabled = false;
     }
 
     // Update is called once per frame
@@ -64,6 +68,9 @@ public class PlayerManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            sword.enabled = true;
+            //Invoke("col", 0.f);
+
             if (state != MyState.Attack)
             {
                 // アニメーションの再生
@@ -71,6 +78,7 @@ public class PlayerManager : MonoBehaviour
                 playerRigidbody.velocity = Vector2.zero;
                 state = MyState.Attack;
             }
+            
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -92,5 +100,10 @@ public class PlayerManager : MonoBehaviour
         {
             state = MyState.Idle;
         }
+    }
+
+    void col()
+    {
+        sword.enabled = false;
     }
 }
