@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedMerchantManager : MonoBehaviour
+public class BlueEnemyManager : MonoBehaviour
 {
     public int hp = 100;
     public int swordDamage = 70;
@@ -30,7 +30,7 @@ public class RedMerchantManager : MonoBehaviour
     }
 
     private void OnTriggerStay(Collider other)
-    { 
+    {
         if (other.gameObject.tag == "RedSword")
         {
             Debug.Log("sodhit");
@@ -46,17 +46,17 @@ public class RedMerchantManager : MonoBehaviour
         }
         else if (other.gameObject.tag == "RedMagic")
         {
-            hp -= magicDamage;
+            hp -= magicDamage / 2;
             Destroy(other.gameObject);
         }
         else if (other.gameObject.tag == "BlueMagic")
         {
-            hp -= magicDamage * 2;
+            hp -= magicDamage;
             Destroy(other.gameObject);
         }
         else if (other.gameObject.tag == "GreenMagic")
         {
-            hp -= magicDamage / 2;
+            hp -= magicDamage * 2;
             Destroy(other.gameObject);
         }
 

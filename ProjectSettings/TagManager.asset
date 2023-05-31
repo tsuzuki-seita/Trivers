@@ -7,6 +7,9 @@ TagManager:
   - RedSword
   - BlueSword
   - GreenSword
+  - BlueMagic
+  - RedMagic
+  - GreenMagic
   layers:
   - Default
   - TransparentFX

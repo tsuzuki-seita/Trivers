@@ -9,7 +9,19 @@ public class PlayerManager : MonoBehaviour
     // PlayerのRigidbody
     public Rigidbody playerRigidbody;
 
-    public BoxCollider sword;
+    public BoxCollider sword;   //剣の当たり判定
+
+    public GameObject MagicAura;    //魔法弾オーラ
+    public GameObject MagicBullet;    //魔法弾prefab
+    [SerializeField] GameObject childObj;
+
+    public float direction;
+
+    GameObject shellAura;
+    GameObject shell;
+
+    private int count;  //魔法弾で使う
+    private int magiccount;
 
     // 以下変数
     // 移動速度の速さを指定
@@ -40,6 +52,8 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        count += 1;
+
         // 移動の横方向をInputから値で取得
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -56,7 +70,7 @@ public class PlayerManager : MonoBehaviour
         if (horizontalInput != 0)
         {
             // キャラがどっちに向いているかを判定する
-            float direction = Mathf.Sign(horizontalInput);
+            direction = Mathf.Sign(horizontalInput);
             // キャラの向きをキーの押された方向に指定する
             transform.localScale = new Vector3(defaultLocalScale.x * direction, defaultLocalScale.y, defaultLocalScale.z);
             state = MyState.Walk;
@@ -78,7 +92,7 @@ public class PlayerManager : MonoBehaviour
                 playerRigidbody.velocity = Vector2.zero;
                 state = MyState.Attack;
             }
-            
+
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -87,19 +101,37 @@ public class PlayerManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            if (state != MyState.Casting)
-            {
-                // アニメーションの再生
-                playerAnimator.SetTrigger("casting");
-                playerRigidbody.velocity = Vector2.zero;
-                state = MyState.Casting;
-            }
+            magiccount = count;
+            // アニメーションの再生
+            playerAnimator.SetTrigger("casting");
+            playerRigidbody.velocity = Vector2.zero;
+            state = MyState.Casting;
 
+            shellAura = Instantiate(MagicAura, childObj.transform.position, Quaternion.identity);
+            Invoke("MagicFire",0.4f);
         }
         if (Input.GetMouseButtonUp(1))
         {
             state = MyState.Idle;
         }
+
+    }
+    void MagicFire()
+    {
+        Destroy(shellAura);
+        if(direction >= 0)
+        {
+            shell = Instantiate(MagicBullet, childObj.transform.position, Quaternion.Euler(0, 0, 0));
+        }
+        else
+        {
+            shell = Instantiate(MagicBullet, childObj.transform.position, Quaternion.Euler(0, 180f, 0));
+        }
+        
+        //Rigidbody shellRb = shell.GetComponent<Rigidbody>();
+
+        //// 弾速は自由に設定
+        //shellRb.AddForce(transform.forward * 300);
     }
 
     void col()

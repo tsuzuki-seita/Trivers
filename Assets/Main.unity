@@ -143,6 +143,7 @@ MonoBehaviour:
   hp: 100
   swordDamage: 70
   magicDamage: 40
+  sword: {fileID: 946934493}
 --- !u!65 &42763314
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -251,8 +252,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 294152865}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.2, z: 0}
-  m_LocalScale: {x: 1, y: 2.0271432, z: 1}
+  m_LocalPosition: {x: 0, y: -3.1, z: 0}
+  m_LocalScale: {x: 1, y: 2.964697, z: 1}
   m_Children: []
   m_Father: {fileID: 2119153037}
   m_RootOrder: 5
@@ -416,7 +417,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529239009}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -11, z: 0}
+  m_LocalPosition: {x: 0, y: -10.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2119153037}
@@ -760,7 +761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920131430}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 4.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2119153037}
@@ -839,7 +840,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1000011742669328, guid: 315058484cf2044ce8dcb608b4678ff6, type: 3}
       propertyPath: m_Name
-      value: Soldier
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1000013493548132, guid: 315058484cf2044ce8dcb608b4678ff6, type: 3}
       propertyPath: m_TagString
@@ -923,6 +924,10 @@ MonoBehaviour:
   playerAnimator: {fileID: 946934495}
   playerRigidbody: {fileID: 946934499}
   sword: {fileID: 946934493}
+  MagicAura: {fileID: 816795513458146953, guid: f02bea55a2f6348579240e93517d245f, type: 3}
+  MagicBullet: {fileID: 8259633452489263279, guid: 2ddb4333502a542d48e67640180493b4, type: 3}
+  childObj: {fileID: 1713336588}
+  direction: 0
   maxSpeed: 9
 --- !u!1 &946934492 stripped
 GameObject:
@@ -945,6 +950,11 @@ BoxCollider:
 --- !u!95 &946934495 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 95000011251442710, guid: 315058484cf2044ce8dcb608b4678ff6, type: 3}
+  m_PrefabInstance: {fileID: 946934489}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &946934498 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4000013857073264, guid: 315058484cf2044ce8dcb608b4678ff6, type: 3}
   m_PrefabInstance: {fileID: 946934489}
   m_PrefabAsset: {fileID: 0}
 --- !u!54 &946934499
@@ -971,7 +981,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 946934490}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.5805044, y: 1.8013391, z: 3}
@@ -1065,7 +1075,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 982512806}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.3, y: 3.7, z: 0}
+  m_LocalPosition: {x: 23.3, y: 7, z: 0}
   m_LocalScale: {x: 81.982056, y: 1, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1185,6 +1195,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6949123, y: 1.864899, z: 3}
   m_Center: {x: 0.012712002, y: 0.9027931, z: 0}
+--- !u!114 &1278970618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278970614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7f9b354aa6784d31a2b180f5652e427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  swordDamage: 70
+  magicDamage: 40
+  sword: {fileID: 946934500}
 --- !u!1 &1304039491
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,6 +1325,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6949123, y: 1.864899, z: 3}
   m_Center: {x: 0.012712002, y: 0.9027931, z: 0}
+--- !u!114 &1542108239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542108235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76ecc7e5550cf4ec1ade68e374e1c520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  swordDamage: 70
+  magicDamage: 40
+  sword: {fileID: 946934500}
 --- !u!1 &1644307912
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,6 +1437,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1713336588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1713336589}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1713336589
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713336588}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.77, y: 0.84, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 946934498}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2108753936
 GameObject:
   m_ObjectHideFlags: 0
