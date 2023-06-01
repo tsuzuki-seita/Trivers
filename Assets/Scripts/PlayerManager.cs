@@ -21,24 +21,13 @@ public class PlayerManager : MonoBehaviour
     GameObject shell;
 
     private int count;  //魔法弾で使う
-    private int magiccount;
+    private float magiccount = 0;
 
     // 以下変数
     // 移動速度の速さを指定
     public float maxSpeed = 9f;
     // PlayerSpriteの初期サイズを保存する変数
     Vector3 defaultLocalScale;
-
-    public enum MyState
-    {
-        Idle,
-        Walk,
-        Attack,
-        Casting,
-        hurt
-    };
-
-    MyState state = MyState.Idle;
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +41,7 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        count += 1;
+        magiccount += Time.deltaTime;
 
         // 移動の横方向をInputから値で取得
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -73,7 +62,7 @@ public class PlayerManager : MonoBehaviour
             direction = Mathf.Sign(horizontalInput);
             // キャラの向きをキーの押された方向に指定する
             transform.localScale = new Vector3(defaultLocalScale.x * direction, defaultLocalScale.y, defaultLocalScale.z);
-            state = MyState.Walk;
+      
         }
 
         playerAnimator.SetFloat("Horizontal", horizontalInput);
@@ -85,34 +74,42 @@ public class PlayerManager : MonoBehaviour
             sword.enabled = true;
             //Invoke("col", 0.f);
 
-            if (state != MyState.Attack)
-            {
-                // アニメーションの再生
-                playerAnimator.SetTrigger("attack");
-                playerRigidbody.velocity = Vector2.zero;
-                state = MyState.Attack;
-            }
+            // アニメーションの再生
+            playerAnimator.SetTrigger("attack");
+            playerRigidbody.velocity = Vector2.zero;
+            
 
         }
         if (Input.GetMouseButtonUp(0))
         {
-            state = MyState.Idle;
+            
         }
 
+        //魔法弾発射
         if (Input.GetMouseButtonDown(1))
         {
-            magiccount = count;
+            magiccount = 0;
             // アニメーションの再生
             playerAnimator.SetTrigger("casting");
             playerRigidbody.velocity = Vector2.zero;
-            state = MyState.Casting;
+            
 
             shellAura = Instantiate(MagicAura, childObj.transform.position, Quaternion.identity);
-            Invoke("MagicFire",0.4f);
+            
         }
         if (Input.GetMouseButtonUp(1))
         {
-            state = MyState.Idle;
+            if (magiccount >= 1)
+            {
+                MagicFire();
+                playerAnimator.SetTrigger("idle");
+            }
+            else
+            {
+                Destroy(shellAura);
+                playerAnimator.SetTrigger("idle");
+            }
+            
         }
 
     }
@@ -128,14 +125,5 @@ public class PlayerManager : MonoBehaviour
             shell = Instantiate(MagicBullet, childObj.transform.position, Quaternion.Euler(0, 180f, 0));
         }
         
-        //Rigidbody shellRb = shell.GetComponent<Rigidbody>();
-
-        //// 弾速は自由に設定
-        //shellRb.AddForce(transform.forward * 300);
-    }
-
-    void col()
-    {
-        sword.enabled = false;
     }
 }

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class RedMerchantManager : MonoBehaviour
 {
-    public int hp = 100;
-    public int swordDamage = 70;
+    private int hp = 100;
+    public int swordDamage = 40;
     public int magicDamage = 40;
 
     public BoxCollider sword;
 
-    //Animation merchantAnime;
+    public GameObject target;
+    public Animator merchantAnimator;
     //Rigidbody merchantRigidbody;
 
     // Start is called before the first frame update
@@ -27,10 +28,21 @@ public class RedMerchantManager : MonoBehaviour
             Debug.Log("deth");
             Destroy(this.gameObject);
         }
+
+        if (Vector3.Distance(transform.position, target.transform.position) < 1.5f)
+        {
+            merchantAnimator.SetTrigger("attack");
+        }
+        else
+        {
+            merchantAnimator.SetTrigger("walk");
+            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, 3 * Time.deltaTime);
+        }
     }
 
-    private void OnTriggerStay(Collider other)
-    { 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("sodhit");
         if (other.gameObject.tag == "RedSword")
         {
             Debug.Log("sodhit");
