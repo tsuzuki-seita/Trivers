@@ -7,13 +7,13 @@ public class EnemyMagicMove : MonoBehaviour
     public Rigidbody Rb;
     Vector3 moveDirection;
     GameObject target;
-    GameObject blueObject;
+    //GameObject blueObject;
 
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.Find("Player");
-        blueObject = GameObject.Find("Priest");
+        //blueObject = GameObject.Find("Priest");
         Rb = this.gameObject.GetComponent<Rigidbody>();
 
         //if (target.transform.position.x >= blueObject.transform.position.x)
@@ -25,7 +25,7 @@ public class EnemyMagicMove : MonoBehaviour
         //    moveDirection = new Vector3(-1, 0, 0);
         //}
 
-        moveDirection = target.transform.position - blueObject.transform.position;
+        moveDirection = target.transform.position - transform.position;
         Rb.velocity = moveDirection;
 
         Rb.velocity *= 2;

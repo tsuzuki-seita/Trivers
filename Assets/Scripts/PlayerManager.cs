@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerManager : MonoBehaviour
     public Rigidbody playerRigidbody;
 
     public BoxCollider sword;   //剣の当たり判定
+    public BoxCollider playerCollider;
 
     public GameObject magicAura;    //魔法弾オーラ
     public GameObject magicBullet;    //魔法弾prefab
@@ -37,6 +39,8 @@ public class PlayerManager : MonoBehaviour
     public Slider slider;
     public Image sliderImage;
 
+    public GameObject gameOver; // 追加
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,8 +58,9 @@ public class PlayerManager : MonoBehaviour
     {
         if (hp < 0)
         {
+            GameOver();
+            playerCollider.enabled = false;
             Debug.Log("deth");
-            Destroy(this.gameObject);
         }
 
         if (Input.GetKeyDown("q"))
@@ -165,15 +170,15 @@ public class PlayerManager : MonoBehaviour
         Destroy(shellAura);
         if (attri == "red")
         {
-            magicBullet.tag = "redMagic";
+            magicBullet.tag = "RedMagic";
         }
         else if (attri == "blue")
         {
-            magicBullet.tag = "blueMagic";
+            magicBullet.tag = "BlueMagic";
         }
         else if (attri == "green")
         {
-            magicBullet.tag = "greenMagic";
+            magicBullet.tag = "GreenMagic";
         }
         if (direction >= 0)
         {
@@ -237,5 +242,15 @@ public class PlayerManager : MonoBehaviour
             Destroy(other.gameObject);
         }
         slider.value = hp;
+    }
+
+    void GameOver()
+    {
+        playerAnimator.SetTrigger("die");
+        gameOver.SetActive(true);
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("Main");
+        }
     }
 }

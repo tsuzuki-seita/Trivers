@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class BlueEnemyManager : MonoBehaviour
 {
-    private int hp = 100;
-    public int swordDamage = 40;
+    private int hp = 200;
+    public int swordDamage = 30;
     public int magicDamage = 40;
 
     public BoxCollider sword;
