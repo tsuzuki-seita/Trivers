@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 1459651280976817748}
   - component: {fileID: 2785563922853523663}
   - component: {fileID: 4690514168750882196}
+  - component: {fileID: 3920588904960861717}
+  - component: {fileID: -3639965577341933252}
   m_Layer: 0
-  m_Name: bolt1 (1)
-  m_TagString: EBlueMagic
+  m_Name: EnemyMagic
+  m_TagString: Magic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,5 +133,30 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &3920588904960861717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8383124856027160941}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b2d75a8460704ea187ad48225f70ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &-3639965577341933252
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8383124856027160941}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.48, y: 0.32, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}

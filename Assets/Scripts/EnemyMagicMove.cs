@@ -16,19 +16,19 @@ public class EnemyMagicMove : MonoBehaviour
         blueObject = GameObject.Find("Priest");
         Rb = this.gameObject.GetComponent<Rigidbody>();
 
-        if (target.transform.position.x >= blueObject.transform.position.x)
-        {
-            moveDirection = new Vector3(1, 0, 0);
-        }
-        else
-        {
-            moveDirection = new Vector3(-1, 0, 0);
-        }
+        //if (target.transform.position.x >= blueObject.transform.position.x)
+        //{
+        //    moveDirection = new Vector3(1, 0, 0);
+        //}
+        //else
+        //{
+        //    moveDirection = new Vector3(-1, 0, 0);
+        //}
 
-
+        moveDirection = target.transform.position - blueObject.transform.position;
         Rb.velocity = moveDirection;
 
-        Rb.velocity *= 15;
+        Rb.velocity *= 2;
     }
 
     // Update is called once per frame

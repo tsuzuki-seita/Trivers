@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BlueEnemyManager : MonoBehaviour
 {
     private int hp = 100;
-    public int swordDamage = 20;
+    public int swordDamage = 40;
     public int magicDamage = 40;
 
     public BoxCollider sword;
@@ -25,6 +26,8 @@ public class BlueEnemyManager : MonoBehaviour
 
     private float timer = 0;
 
+    public Slider slider;
+
     public enum EnemyState
     {
         Walk,
@@ -35,11 +38,20 @@ public class BlueEnemyManager : MonoBehaviour
     };
     EnemyState state;
 
+    // PlayerSpriteの初期サイズを保存する変数
+    Vector3 defaultLocalScale;
+
     // Start is called before the first frame update
     void Start()
     {
+        // 初期状態でPlayerの大きさを保存
+        defaultLocalScale = transform.localScale;
+
         state = EnemyState.Chase;
         blueAnimator.SetTrigger("walk");
+
+        slider.maxValue = hp;
+        slider.value = hp;
     }
 
     // Update is called once per frame
@@ -51,9 +63,25 @@ public class BlueEnemyManager : MonoBehaviour
         {
             Debug.Log("deth");
             Destroy(this.gameObject);
+            if(shellAura != null)
+            {
+                Destroy(shellAura);
+            }
+            
         }
 
-        if(state == EnemyState.Chase)
+        if(transform.position.x < target.transform.position.x)
+        {
+            // キャラの向きをキーの押された方向に指定する
+            transform.localScale = new Vector3(defaultLocalScale.x * -1, defaultLocalScale.y, defaultLocalScale.z);
+        }
+        else
+        {
+            // キャラの向きをキーの押された方向に指定する
+            transform.localScale = new Vector3(defaultLocalScale.x, defaultLocalScale.y, defaultLocalScale.z);
+        }
+
+        if (state == EnemyState.Chase)
         {
             if (Vector3.Distance(transform.position, target.transform.position) > 15f)
             {
@@ -87,9 +115,10 @@ public class BlueEnemyManager : MonoBehaviour
         }
         if(state == EnemyState.Walk)
         {
-            if(transform.position.y - target.transform.position.y >= 0.5f)
+            if (Vector3.Distance(transform.position, target.transform.position) > 15f)
             {
-                transform.position = Vector2.MoveTowards(transform.position, new Vector3(0, target.transform.position.y, 0), 3 * Time.deltaTime);
+
+                transform.position = Vector2.MoveTowards(transform.position, target.transform.position, 3 * Time.deltaTime);
             }
             else
             {
@@ -146,5 +175,6 @@ public class BlueEnemyManager : MonoBehaviour
         }
 
         sword.enabled = false;
+        slider.value = hp;
     }
 }

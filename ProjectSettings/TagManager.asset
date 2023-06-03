@@ -10,9 +10,9 @@ TagManager:
   - BlueMagic
   - RedMagic
   - GreenMagic
-  - EBlueMagic
-  - ERedMagic
-  - EGreenMagic
+  - Leg
+  - Arrow
+  - Magic
   layers:
   - Default
   - TransparentFX

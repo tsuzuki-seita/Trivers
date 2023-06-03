@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -11,8 +12,8 @@ public class PlayerManager : MonoBehaviour
 
     public BoxCollider sword;   //剣の当たり判定
 
-    public GameObject MagicAura;    //魔法弾オーラ
-    public GameObject MagicBullet;    //魔法弾prefab
+    public GameObject magicAura;    //魔法弾オーラ
+    public GameObject magicBullet;    //魔法弾prefab
     [SerializeField] GameObject childObj;
 
     public float direction;
@@ -23,11 +24,18 @@ public class PlayerManager : MonoBehaviour
     private int count;  //魔法弾で使う
     private float magiccount = 0;
 
-    // 以下変数
     // 移動速度の速さを指定
-    public float maxSpeed = 9f;
+    public float maxSpeed = 6f;
     // PlayerSpriteの初期サイズを保存する変数
     Vector3 defaultLocalScale;
+
+    private int hp = 500;
+    public int magicDamage = 50;
+    public int legDamage = 50;
+    private string attri = "red";
+
+    public Slider slider;
+    public Image sliderImage;
 
     // Start is called before the first frame update
     void Start()
@@ -36,11 +44,36 @@ public class PlayerManager : MonoBehaviour
         defaultLocalScale = transform.localScale;
 
         sword.enabled = false;
+
+        slider.maxValue = hp;
+        slider.value = hp;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (hp < 0)
+        {
+            Debug.Log("deth");
+            Destroy(this.gameObject);
+        }
+
+        if (Input.GetKeyDown("q"))
+        {
+            attri = "red";
+            sliderImage.color = new Color32(248, 93, 6, 255);
+        }
+        else if (Input.GetKeyDown("e"))
+        {
+            attri = "blue";
+            sliderImage.color = new Color32(6, 191, 248, 255);
+        }
+        else if (Input.GetKeyDown("r"))
+        {
+            attri = "green";
+            sliderImage.color = new Color32(6, 248, 37, 255);
+        }
+ 
         magiccount += Time.deltaTime;
 
         // 移動の横方向をInputから値で取得
@@ -71,7 +104,21 @@ public class PlayerManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            if(attri == "red")
+            {
+                sword.tag = "RedSword";
+            }
+            else if(attri == "blue")
+            {
+                sword.tag = "BlueSword";
+            }
+            else if(attri == "green")
+            {
+                sword.tag = "GreenSword";
+            }
+
             sword.enabled = true;
+   
             //Invoke("col", 0.f);
 
             // アニメーションの再生
@@ -92,9 +139,8 @@ public class PlayerManager : MonoBehaviour
             // アニメーションの再生
             playerAnimator.SetTrigger("casting");
             playerRigidbody.velocity = Vector2.zero;
-            
 
-            shellAura = Instantiate(MagicAura, childObj.transform.position, Quaternion.identity);
+            shellAura = Instantiate(magicAura, childObj.transform.position, Quaternion.identity);
             
         }
         if (Input.GetMouseButtonUp(1))
@@ -113,17 +159,83 @@ public class PlayerManager : MonoBehaviour
         }
 
     }
+
     void MagicFire()
     {
         Destroy(shellAura);
-        if(direction >= 0)
+        if (attri == "red")
         {
-            shell = Instantiate(MagicBullet, childObj.transform.position, Quaternion.Euler(0, 0, 0));
+            magicBullet.tag = "redMagic";
+        }
+        else if (attri == "blue")
+        {
+            magicBullet.tag = "blueMagic";
+        }
+        else if (attri == "green")
+        {
+            magicBullet.tag = "greenMagic";
+        }
+        if (direction >= 0)
+        {
+            shell = Instantiate(magicBullet, childObj.transform.position, Quaternion.Euler(0, 0, 0));
         }
         else
         {
-            shell = Instantiate(MagicBullet, childObj.transform.position, Quaternion.Euler(0, 180f, 0));
+            shell = Instantiate(magicBullet, childObj.transform.position, Quaternion.Euler(0, 180f, 0));
         }
         
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("enemyhit");
+        if (other.gameObject.tag == "Leg")
+        {
+            if (attri == "red")
+            {
+                hp -= legDamage;
+            }
+            else if (attri == "blue")
+            {
+                hp -= legDamage / 2;
+            }
+            else if (attri == "green")
+            {
+                hp -= legDamage * 2;
+            }
+        }
+        else if (other.gameObject.tag == "Magic")
+        {
+            if (attri == "red")
+            {
+                hp -= magicDamage * 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= magicDamage;
+            }
+            else if (attri == "green")
+            {
+                hp -= magicDamage / 2;
+            }
+            Destroy(other.gameObject);
+        }
+        else if (other.gameObject.tag == "Arrow")
+        {
+            if (attri == "red")
+            {
+                hp -= magicDamage / 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= magicDamage * 2;
+            }
+            else if (attri == "green")
+            {
+                hp -= magicDamage;
+            }
+            Destroy(other.gameObject);
+        }
+        slider.value = hp;
     }
 }

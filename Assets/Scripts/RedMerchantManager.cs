@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RedMerchantManager : MonoBehaviour
 {
@@ -14,10 +15,19 @@ public class RedMerchantManager : MonoBehaviour
     public Animator merchantAnimator;
     //Rigidbody merchantRigidbody;
 
+    // PlayerSpriteの初期サイズを保存する変数
+    Vector3 defaultLocalScale;
+
+    public Slider slider;
+
     // Start is called before the first frame update
     void Start()
     {
+        // 初期状態でPlayerの大きさを保存
+        defaultLocalScale = transform.localScale;
 
+        slider.maxValue = hp;
+        slider.value = hp;
     }
 
     // Update is called once per frame
@@ -29,7 +39,18 @@ public class RedMerchantManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (Vector3.Distance(transform.position, target.transform.position) < 1.5f)
+        if (transform.position.x < target.transform.position.x)
+        {
+            // キャラの向きをキーの押された方向に指定する
+            transform.localScale = new Vector3(defaultLocalScale.x * -1, defaultLocalScale.y, defaultLocalScale.z);
+        }
+        else
+        {
+            // キャラの向きをキーの押された方向に指定する
+            transform.localScale = new Vector3(defaultLocalScale.x, defaultLocalScale.y, defaultLocalScale.z);
+        }
+
+        if (Vector3.Distance(transform.position, target.transform.position) < 1)
         {
             merchantAnimator.SetTrigger("attack");
         }
@@ -73,5 +94,6 @@ public class RedMerchantManager : MonoBehaviour
         }
 
         sword.enabled = false;
+        slider.value = hp;
     }
 }

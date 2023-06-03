@@ -24,11 +24,11 @@ public class Magicmove : MonoBehaviour
         {
             moveDirection = new Vector3(-1, 0, 0);
         }
-        
 
         Rb.velocity = moveDirection;
 
         Rb.velocity *= 15;
+
     }
 
     // Update is called once per frame
