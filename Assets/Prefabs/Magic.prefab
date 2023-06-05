@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -4814490491265252486}
   m_Layer: 0
   m_Name: Magic
-  m_TagString: BlueMagic
+  m_TagString: RedMagic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8259633452489263279}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.407442, y: 3.4165533, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0

@@ -34,7 +34,7 @@ public class PlayerManager : MonoBehaviour
     private int hp = 500;
     public int magicDamage = 50;
     public int legDamage = 50;
-    private string attri = "red";
+    public string attri = "red";
 
     public Slider slider;
     public Image sliderImage;
