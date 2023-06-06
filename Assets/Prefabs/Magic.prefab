@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8259633452489263281}
   - component: {fileID: 8259633452489263280}
   - component: {fileID: 735226997770717601}
-  - component: {fileID: 7517773695132597333}
-  - component: {fileID: -4814490491265252486}
+  - component: {fileID: 3875629641877844101}
+  - component: {fileID: 3567168505301996042}
   m_Layer: 0
   m_Name: Magic
   m_TagString: RedMagic
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1263c07a328ac43c19ff6c1a79a887a3, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.972549, g: 0.3647059, b: 0.023529412, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -117,8 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58dc65a5a765547f185593bb2b28a43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rb: {fileID: 7517773695132597333}
---- !u!54 &7517773695132597333
+  Rb: {fileID: 3875629641877844101}
+--- !u!54 &3875629641877844101
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,9 +132,9 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &-4814490491265252486
+--- !u!65 &3567168505301996042
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

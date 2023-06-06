@@ -93,6 +93,17 @@ public class PlayerManager : MonoBehaviour
         // 速度をセットする
         playerRigidbody.velocity = new Vector2(horizontalInput * maxSpeed, verticalInput * maxSpeed);
 
+        //追加　現在のポジションを保持する
+        Vector3 currentPos = transform.position;
+
+        //追加　Mathf.ClampでX,Yの値それぞれが最小～最大の範囲内に収める。
+        //範囲を超えていたら範囲内の値を代入する
+        //currentPos.x = Mathf.Clamp(currentPos.x, -40, 0);
+        currentPos.y = Mathf.Clamp(currentPos.y, -2.5f, 2);
+
+        //追加　positionをcurrentPosにする
+        transform.position = currentPos;
+
         // もし左右のキーどちらかが押されているなら
         if (horizontalInput != 0)
         {
@@ -171,14 +182,17 @@ public class PlayerManager : MonoBehaviour
         if (attri == "red")
         {
             magicBullet.tag = "RedMagic";
+            magicBullet.gameObject.GetComponent<SpriteRenderer>().color = new Color32(248, 93, 6, 255);
         }
         else if (attri == "blue")
         {
             magicBullet.tag = "BlueMagic";
+            magicBullet.gameObject.GetComponent<SpriteRenderer>().color = new Color32(250, 250, 250, 255);
         }
         else if (attri == "green")
         {
             magicBullet.tag = "GreenMagic";
+            magicBullet.gameObject.GetComponent<SpriteRenderer>().color = new Color32(6, 248, 37, 255);
         }
         if (direction >= 0)
         {
@@ -191,10 +205,10 @@ public class PlayerManager : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("enemyhit");
-        if (other.gameObject.tag == "Leg")
+        Debug.Log("playerhit");
+        if (collision.gameObject.tag == "Leg")
         {
             if (attri == "red")
             {
@@ -209,7 +223,7 @@ public class PlayerManager : MonoBehaviour
                 hp -= legDamage * 2;
             }
         }
-        else if (other.gameObject.tag == "Magic")
+        else if (collision.gameObject.tag == "Magic")
         {
             if (attri == "red")
             {
@@ -223,9 +237,10 @@ public class PlayerManager : MonoBehaviour
             {
                 hp -= magicDamage / 2;
             }
-            Destroy(other.gameObject);
+            Destroy(collision.gameObject);
+            Debug.Log("destroy");
         }
-        else if (other.gameObject.tag == "Arrow")
+        else if (collision.gameObject.tag == "Arrow")
         {
             if (attri == "red")
             {
@@ -239,7 +254,56 @@ public class PlayerManager : MonoBehaviour
             {
                 hp -= magicDamage;
             }
-            Destroy(other.gameObject);
+            Destroy(collision.gameObject);
+            Debug.Log("destroy");
+        }
+        else if(collision.gameObject.tag == "BossRedSword")
+        {
+            if (attri == "red")
+            {
+                hp -= legDamage;
+            }
+            else if (attri == "blue")
+            {
+                hp -= legDamage / 2;
+            }
+            else if (attri == "green")
+            {
+                hp -= legDamage * 2;
+            }
+            collision.enabled = false;
+        }
+        else if (collision.gameObject.tag == "BossBlueSword")
+        {
+            if (attri == "red")
+            {
+                hp -= magicDamage * 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= magicDamage;
+            }
+            else if (attri == "green")
+            {
+                hp -= magicDamage / 2;
+            }
+            collision.enabled = false;
+        }
+        else if (collision.gameObject.tag == "BossGreenSword")
+        {
+            if (attri == "red")
+            {
+                hp -= magicDamage * 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= magicDamage;
+            }
+            else if (attri == "green")
+            {
+                hp -= magicDamage / 2;
+            }
+            collision.enabled = false;
         }
         slider.value = hp;
     }

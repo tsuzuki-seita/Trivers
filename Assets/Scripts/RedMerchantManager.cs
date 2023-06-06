@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class RedMerchantManager : MonoBehaviour
 {
-    private int hp = 500;
+    private int hp = 100;
     public int swordDamage = 30;
     public int magicDamage = 40;
 

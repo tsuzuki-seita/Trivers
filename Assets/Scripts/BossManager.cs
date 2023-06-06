@@ -11,11 +11,12 @@ public class BossManager : MonoBehaviour
     public int magicDamage = 40;
 
     public BoxCollider sword;
+    public BoxCollider bossSword;
 
     public GameObject player;
 
-    public GameObject MagicAura;    //魔法弾オーラ
-    public GameObject MagicBullet;    //魔法弾prefab
+    public GameObject magicAura;    //魔法弾オーラ
+    public GameObject magicBullet;    //魔法弾prefab
     [SerializeField] GameObject childObj;
     GameObject shellAura;
     GameObject shell;
@@ -28,6 +29,7 @@ public class BossManager : MonoBehaviour
     private float timer = 0;
 
     public Slider slider;
+    public Image sliderImage;
 
     public enum EnemyState
     {
@@ -104,18 +106,7 @@ public class BossManager : MonoBehaviour
             if (state == EnemyState.Freeze)
             {
                 Debug.Log("Mode：walk");
-                if (playerManager.attri == "red")
-                {
-                    this.attri = "blue";
-                }
-                else if(playerManager.attri == "blue")
-                {
-                    this.attri = "green";
-                }
-                else if(playerManager.attri == "green")
-                {
-                    this.attri = "red";
-                }
+                colorChange();
                 state = EnemyState.Walk;
             }         
             if(state == EnemyState.Walk)
@@ -134,9 +125,22 @@ public class BossManager : MonoBehaviour
             {              
                 if(timer == 0)
                 {
+                    if (attri == "red")
+                    {
+                        bossSword.tag = "BossRedSword";
+                    }
+                    else if (attri == "blue")
+                    {
+                        bossSword.tag = "BossBlueSword";
+                    }
+                    else if (attri == "green")
+                    {
+                        bossSword.tag = "BossGreenSword";
+                    }
+                    bossSword.enabled = true;
                     bossAnimator.SetTrigger("attack");
                 }
-                if (timer > 1)
+                if (timer > 1.2f)
                 {
                     bossAnimator.SetTrigger("idle");
                     bossstate = BossState.Idle;
@@ -152,26 +156,22 @@ public class BossManager : MonoBehaviour
             bossstate = BossState.Random;
             if (state == EnemyState.Freeze)
             {
-                if (playerManager.attri == "red")
+                colorChange();
+                if(target.transform.position.x < 20)
                 {
-                    this.attri = "blue";
+                    transform.position = new Vector3(target.transform.position.x + 10, transform.position.y, transform.position.z);
                 }
-                else if (playerManager.attri == "blue")
+                else
                 {
-                    this.attri = "green";
+                    transform.position = new Vector3(target.transform.position.x - 10, transform.position.y, transform.position.z);
                 }
-                else if (playerManager.attri == "green")
-                {
-                    this.attri = "red";
-                }
-                transform.position = new Vector3(target.transform.position.x + 15, transform.position.y,transform.position.z);
                 state = EnemyState.Attack;
                 bossAnimator.SetTrigger("casting");
             }
             if(state == EnemyState.Attack)
             {
                 Invoke("MagicFire", 1);
-                shellAura = Instantiate(MagicAura, childObj.transform.position, Quaternion.identity);
+                shellAura = Instantiate(magicAura, childObj.transform.position, Quaternion.identity);
 
                 state = EnemyState.Wait;
                 bossAnimator.SetTrigger("idle");
@@ -193,23 +193,12 @@ public class BossManager : MonoBehaviour
             bossstate = BossState.Random;
             if (state == EnemyState.Freeze)
             {
-                if (playerManager.attri == "red")
-                {
-                    this.attri = "blue";
-                }
-                else if (playerManager.attri == "blue")
-                {
-                    this.attri = "green";
-                }
-                else if (playerManager.attri == "green")
-                {
-                    this.attri = "red";
-                }
-                transform.position = new Vector3(target.transform.position.x + 15, transform.position.y, transform.position.z);
+                colorChange();
                 state = EnemyState.Attack;
             }
             if(state == EnemyState.Attack)
             {
+                bossAnimator.SetTrigger("full");
                 fullFire();
                 state = EnemyState.Wait;
             }
@@ -218,6 +207,7 @@ public class BossManager : MonoBehaviour
                 timer += Time.deltaTime;
                 if (timer > 2)
                 {
+                    bossAnimator.SetTrigger("idle");
                     bossstate = BossState.Idle;
                     state = EnemyState.Freeze;
                     timer = 0;
@@ -229,15 +219,49 @@ public class BossManager : MonoBehaviour
     void MagicFire()
     {
         Destroy(shellAura);
+        if (attri == "red")
+        {
+            magicBullet.tag = "Leg";
+            magicBullet.gameObject.GetComponent<SpriteRenderer>().color = new Color32(248, 93, 6, 255);
+        }
+        else if (attri == "blue")
+        {
+            magicBullet.tag = "Magic";
+            magicBullet.gameObject.GetComponent<SpriteRenderer>().color = new Color32(250, 250, 250, 255);
+        }
+        else if (attri == "green")
+        {
+            magicBullet.tag = "Arrow";
+            magicBullet.gameObject.GetComponent<SpriteRenderer>().color = new Color32(6, 248, 37, 255);
+        }
         if (player.transform.position.x <= transform.position.x)
         {
-            shell = Instantiate(MagicBullet, childObj.transform.position, Quaternion.Euler(0, 0, 0));
+            shell = Instantiate(magicBullet, childObj.transform.position, Quaternion.Euler(20, 0, 0));
         }
         else
         {
-            shell = Instantiate(MagicBullet, childObj.transform.position, Quaternion.Euler(0, 180f, 0));
+            shell = Instantiate(magicBullet, childObj.transform.position, Quaternion.Euler(20, 180f, 0));
         }
         bossAnimator.SetTrigger("idle");
+    }
+
+    void colorChange()
+    {
+        if (playerManager.attri == "red")
+        {
+            this.attri = "blue";
+            sliderImage.color = new Color32(6, 191, 248, 255);
+        }
+        else if (playerManager.attri == "blue")
+        {
+            this.attri = "green";
+            sliderImage.color = new Color32(6, 248, 37, 255);
+        }
+        else if (playerManager.attri == "green")
+        {
+            this.attri = "red";
+            sliderImage.color = new Color32(248, 93, 6, 255);
+        }
     }
 
     void fullFire()
@@ -245,39 +269,110 @@ public class BossManager : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerStay(Collider collision)
     {
         Debug.Log("sodhit");
         if (collision.gameObject.tag == "RedSword")
         {
-            Debug.Log("damage");
-            hp -= swordDamage / 2;
+            if (attri == "red")
+            {
+                hp -= swordDamage * 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= swordDamage;
+            }
+            else if (attri == "green")
+            {
+                hp -= swordDamage / 2;
+            }
         }
         else if (collision.gameObject.tag == "BlueSword")
         {
-            hp -= swordDamage;
+            if (attri == "red")
+            {
+                hp -= swordDamage * 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= swordDamage;
+            }
+            else if (attri == "green")
+            {
+                hp -= swordDamage / 2;
+            }
         }
         else if (collision.gameObject.tag == "GreenSword")
         {
-            hp -= swordDamage * 2;
+            if (attri == "red")
+            {
+                hp -= swordDamage * 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= swordDamage;
+            }
+            else if (attri == "green")
+            {
+                hp -= swordDamage / 2;
+            }
         }
         else if (collision.gameObject.tag == "RedMagic")
         {
-            hp -= magicDamage / 2;
+            if (attri == "red")
+            {
+                hp -= magicDamage * 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= magicDamage;
+            }
+            else if (attri == "green")
+            {
+                hp -= magicDamage / 2;
+            }
+
             Destroy(collision.gameObject);
+            Debug.Log("destroy");
         }
         else if (collision.gameObject.tag == "BlueMagic")
         {
-            hp -= magicDamage;
+            if (attri == "red")
+            {
+                hp -= magicDamage * 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= magicDamage;
+            }
+            else if (attri == "green")
+            {
+                hp -= magicDamage / 2;
+            }
             Destroy(collision.gameObject);
+            Debug.Log("destroy");
         }
         else if (collision.gameObject.tag == "GreenMagic")
         {
-            hp -= magicDamage * 2;
+            if (attri == "red")
+            {
+                hp -= magicDamage * 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= magicDamage;
+            }
+            else if (attri == "green")
+            {
+                hp -= magicDamage / 2;
+            }
             Destroy(collision.gameObject);
+            Debug.Log("destroy");
         }
 
         sword.enabled = false;
         slider.value = hp;
     }
 }
+
+
