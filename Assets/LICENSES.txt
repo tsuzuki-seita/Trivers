@@ -1,0 +1,29 @@
+The following files are subject to the license specified in this content.
+以下のファイルは本内容で指定のライセンスが適用されます。
+- Left.anim
+- Right.anim
+- Left_Roll.controller
+- Right_Roll.controller
+- Diamond.fbx
+- Barrel.fbx
+- wood.fbx
+- BackgroundSprite.png
+- ButtonSprite.png
+© 水田 将大 Life is Tech, Inc. 2020
+
+- Octahedron.fbx
+- GemTextureBlue.png
+- GemTextureGreen.png
+- GemTexturePink.png
+- GemTextureRed.png
+- GemTextureYellow.png
+© Akita Shohei Life is Tech, Inc. 2020
+
+Required（必須）
+ - License and copyright notice（著作権の表示）
+ - Disclose Source（ソースの明示）
+Permitted（許可）
+ - Private Use（個人利用）
+Forbidden（禁止）
+ - Use Trademark（トレードマークの使用）
+ - Distribution（配布の禁止）

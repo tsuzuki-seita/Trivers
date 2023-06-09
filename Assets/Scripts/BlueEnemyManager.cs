@@ -5,16 +5,18 @@ using UnityEngine.UI;
 
 public class BlueEnemyManager : MonoBehaviour
 {
-    private int hp = 200;
-    public int swordDamage = 30;
-    public int magicDamage = 40;
+    private int hp = 100;
+    private int currentHp;
+    public int swordDamage = 50;
+    public int magicDamage = 50;
 
     public BoxCollider sword;
 
     public GameObject player;
+    public GameObject gameManager;
 
-    public GameObject MagicAura;    //魔法弾オーラ
-    public GameObject MagicBullet;    //魔法弾prefab
+    public GameObject magicAura;    //魔法弾オーラ
+    public GameObject magicBullet;    //魔法弾prefab
     [SerializeField] GameObject childObj;
     GameObject shellAura;
     GameObject shell;
@@ -52,13 +54,16 @@ public class BlueEnemyManager : MonoBehaviour
 
         slider.maxValue = hp;
         slider.value = hp;
+
+        currentHp = hp;
+
+        magicBullet.tag = "Magic";
+        magicBullet.gameObject.GetComponent<SpriteRenderer>().color = new Color32(250, 250, 250, 255);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-
         if (hp < 0)
         {
             Debug.Log("deth");
@@ -67,10 +72,16 @@ public class BlueEnemyManager : MonoBehaviour
             {
                 Destroy(shellAura);
             }
-            
+            gameManager.SendMessage("EnemyBreak");
         }
 
-        if(transform.position.x < target.transform.position.x)
+        if (hp != currentHp)
+        {
+            blueAnimator.SetTrigger("hurt");
+            currentHp = hp;
+        }
+
+        if (transform.position.x < target.transform.position.x)
         {
             // キャラの向きをキーの押された方向に指定する
             transform.localScale = new Vector3(defaultLocalScale.x * -1, defaultLocalScale.y, defaultLocalScale.z);
@@ -97,7 +108,7 @@ public class BlueEnemyManager : MonoBehaviour
         if(state == EnemyState.Attack)
         {
             Invoke("MagicFire", 1);
-            shellAura = Instantiate(MagicAura, childObj.transform.position, Quaternion.identity);
+            shellAura = Instantiate(magicAura, childObj.transform.position, Quaternion.identity);
             
             state = EnemyState.Wait;
             timer = 0;
@@ -133,11 +144,11 @@ public class BlueEnemyManager : MonoBehaviour
         Destroy(shellAura);
         if (player.transform.position.x <= transform.position.x)
         {
-            shell = Instantiate(MagicBullet, childObj.transform.position, Quaternion.Euler(0, 0, 0));
+            shell = Instantiate(magicBullet, childObj.transform.position, Quaternion.Euler(0, 0, 0));
         }
         else
         {
-            shell = Instantiate(MagicBullet, childObj.transform.position, Quaternion.Euler(0, 180f, 0));
+            shell = Instantiate(magicBullet, childObj.transform.position, Quaternion.Euler(0, 180f, 0));
         }
         blueAnimator.SetTrigger("idle");
     }
@@ -157,6 +168,7 @@ public class BlueEnemyManager : MonoBehaviour
         else if (collision.gameObject.tag == "GreenSword")
         {
             hp -= swordDamage * 2;
+            gameManager.SendMessage("AddScoreCritical");
         }
         else if (collision.gameObject.tag == "RedMagic")
         {
@@ -172,6 +184,7 @@ public class BlueEnemyManager : MonoBehaviour
         {
             hp -= magicDamage * 2;
             Destroy(collision.gameObject);
+            gameManager.SendMessage("AddScoreCritical");
         }
 
         sword.enabled = false;

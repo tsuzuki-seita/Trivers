@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class GreenEnemyManager : MonoBehaviour
 {
     private int hp = 100;
-    public int swordDamage = 30;
-    public int magicDamage = 40;
+    private int currentHp;
+    public int swordDamage = 50;
+    public int magicDamage = 50;
 
     public BoxCollider sword;
     public GameObject player;
+    public GameObject gameManager;
 
     public GameObject arrow;    //矢
     [SerializeField] GameObject childObj;
@@ -47,17 +49,24 @@ public class GreenEnemyManager : MonoBehaviour
 
         slider.maxValue = hp;
         slider.value = hp;
+
+        currentHp = hp;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
         if (hp < 0)
         {
             Debug.Log("deth");
             Destroy(this.gameObject);
+            gameManager.SendMessage("EnemyBreak");
+        }
+
+        if (hp != currentHp)
+        {
+            greenAnimator.SetTrigger("hurt");
+            currentHp = hp;
         }
 
         if (transform.position.x < target.transform.position.x)
@@ -136,20 +145,22 @@ public class GreenEnemyManager : MonoBehaviour
         if (other.gameObject.tag == "RedSword")
         {
             Debug.Log("sodhit");
-            hp -= swordDamage;
+            hp -= swordDamage * 2;
+            gameManager.SendMessage("AddScoreCritical");
         }
         else if (other.gameObject.tag == "BlueSword")
         {
-            hp -= swordDamage * 2;
+            hp -= swordDamage / 2;
         }
         else if (other.gameObject.tag == "GreenSword")
         {
-            hp -= swordDamage / 2;
+            hp -= swordDamage;
         }
         else if (other.gameObject.tag == "RedMagic")
         {
             hp -= magicDamage * 2;
             Destroy(other.gameObject);
+            gameManager.SendMessage("AddScoreCritical");
         }
         else if (other.gameObject.tag == "BlueMagic")
         {

@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 public class RedMerchantManager : MonoBehaviour
 {
-    private int hp = 100;
-    public int swordDamage = 30;
-    public int magicDamage = 40;
+    private int hp = 200;
+    private int currentHp;
+    public int swordDamage = 10;
+    public int magicDamage = 50;
 
     public BoxCollider sword;
+
+    public GameObject gameManager;
 
     public GameObject target;
     public Animator merchantAnimator;
@@ -28,6 +31,8 @@ public class RedMerchantManager : MonoBehaviour
 
         slider.maxValue = hp;
         slider.value = hp;
+
+        currentHp = hp;
     }
 
     // Update is called once per frame
@@ -37,6 +42,13 @@ public class RedMerchantManager : MonoBehaviour
         {
             Debug.Log("deth");
             Destroy(this.gameObject);
+            gameManager.SendMessage("EnemyBreak");
+        }
+
+        if (hp != currentHp)
+        {
+            merchantAnimator.SetTrigger("hurt");
+            currentHp = hp;
         }
 
         if (transform.position.x < target.transform.position.x)
@@ -72,6 +84,7 @@ public class RedMerchantManager : MonoBehaviour
         else if (other.gameObject.tag == "BlueSword")
         {
             hp -= swordDamage * 2;
+            gameManager.SendMessage("AddScoreCritical");
         }
         else if (other.gameObject.tag == "GreenSword")
         {
@@ -86,6 +99,7 @@ public class RedMerchantManager : MonoBehaviour
         {
             hp -= magicDamage * 2;
             Destroy(other.gameObject);
+            gameManager.SendMessage("AddScoreCritical");
         }
         else if (other.gameObject.tag == "GreenMagic")
         {

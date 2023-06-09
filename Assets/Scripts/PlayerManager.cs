@@ -25,19 +25,23 @@ public class PlayerManager : MonoBehaviour
 
     private int count;  //魔法弾で使う
     private float magiccount = 0;
+    private float attackcount = 0;
 
     // 移動速度の速さを指定
     public float maxSpeed = 6f;
     // PlayerSpriteの初期サイズを保存する変数
     Vector3 defaultLocalScale;
 
-    private int hp = 500;
-    public int magicDamage = 50;
-    public int legDamage = 50;
+    private int hp = 7500;
+    private int currentHp;
+    public int magicDamage = 40;
+    public int legDamage = 20;
     public string attri = "red";
 
     public Slider slider;
     public Image sliderImage;
+    public Slider mpSlider;
+    public float mp = 0;
 
     public GameObject gameOver; // 追加
 
@@ -51,6 +55,11 @@ public class PlayerManager : MonoBehaviour
 
         slider.maxValue = hp;
         slider.value = hp;
+
+        mpSlider.maxValue = 1;
+        mpSlider.value = 0;
+
+        currentHp = hp;
     }
 
     // Update is called once per frame
@@ -62,6 +71,12 @@ public class PlayerManager : MonoBehaviour
             playerCollider.enabled = false;
             Debug.Log("deth");
         }
+
+        //if(hp != currentHp)
+        //{
+        //    playerAnimator.SetTrigger("hurt");
+        //    currentHp = hp;
+        //}
 
         if (Input.GetKeyDown("q"))
         {
@@ -80,6 +95,7 @@ public class PlayerManager : MonoBehaviour
         }
  
         magiccount += Time.deltaTime;
+        attackcount += Time.deltaTime;
 
         // 移動の横方向をInputから値で取得
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -118,30 +134,32 @@ public class PlayerManager : MonoBehaviour
         playerAnimator.SetFloat("Vertical", verticalInput);
 
 
-        if (Input.GetMouseButtonDown(0))
+        if(attackcount > 0.75f)
         {
-            if(attri == "red")
+            if (Input.GetMouseButtonDown(0))
             {
-                sword.tag = "RedSword";
-            }
-            else if(attri == "blue")
-            {
-                sword.tag = "BlueSword";
-            }
-            else if(attri == "green")
-            {
-                sword.tag = "GreenSword";
-            }
+                if (attri == "red")
+                {
+                    sword.tag = "RedSword";
+                }
+                else if (attri == "blue")
+                {
+                    sword.tag = "BlueSword";
+                }
+                else if (attri == "green")
+                {
+                    sword.tag = "GreenSword";
+                }
 
-            sword.enabled = true;
-   
-            //Invoke("col", 0.f);
+                sword.enabled = true;
 
-            // アニメーションの再生
-            playerAnimator.SetTrigger("attack");
-            playerRigidbody.velocity = Vector2.zero;
-            
+                //Invoke("col", 0.f);
 
+                // アニメーションの再生
+                playerAnimator.SetTrigger("attack");
+                playerRigidbody.velocity = Vector2.zero;
+                attackcount = 0;
+            }
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -159,6 +177,12 @@ public class PlayerManager : MonoBehaviour
             shellAura = Instantiate(magicAura, childObj.transform.position, Quaternion.identity);
             
         }
+        if (Input.GetMouseButton(1))
+        {
+            //playerAnimator.SetTrigger("casting");
+            mp += Time.deltaTime;
+            mpSlider.value = mp;
+        }
         if (Input.GetMouseButtonUp(1))
         {
             if (magiccount >= 1)
@@ -171,7 +195,8 @@ public class PlayerManager : MonoBehaviour
                 Destroy(shellAura);
                 playerAnimator.SetTrigger("idle");
             }
-            
+            mpSlider.value = 0;
+            mp = 0;
         }
 
     }
@@ -205,7 +230,7 @@ public class PlayerManager : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerStay(Collider collision)
     {
         Debug.Log("playerhit");
         if (collision.gameObject.tag == "Leg")

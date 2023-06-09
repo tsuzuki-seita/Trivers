@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3567168505301996042}
   m_Layer: 0
   m_Name: Magic
-  m_TagString: RedMagic
+  m_TagString: Magic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1263c07a328ac43c19ff6c1a79a887a3, type: 3}
-  m_Color: {r: 0.972549, g: 0.3647059, b: 0.023529412, a: 1}
+  m_Color: {r: 0.98039216, g: 0.98039216, b: 0.98039216, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
