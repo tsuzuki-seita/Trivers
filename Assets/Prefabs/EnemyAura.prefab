@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 816795513458147060}
   - component: {fileID: 816795513458146955}
   - component: {fileID: 816795513458146954}
-  - component: {fileID: -4948271852551172295}
   m_Layer: 0
-  m_Name: Aura
+  m_Name: EnemyAura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,15 +102,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-4948271852551172295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 816795513458146953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20ac8206e1234488ea272061a9d2abf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

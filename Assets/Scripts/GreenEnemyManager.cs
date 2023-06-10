@@ -130,11 +130,11 @@ public class GreenEnemyManager : MonoBehaviour
     {
         if (player.transform.position.x <= transform.position.x)
         {
-            shell = Instantiate(arrow, childObj.transform.position, Quaternion.Euler(0, 0, 0));
+            shell = Instantiate(arrow, childObj.transform.position, Quaternion.Euler(0, 40, 0));
         }
         else
         {
-            shell = Instantiate(arrow, childObj.transform.position, Quaternion.Euler(0, 180f, 0));
+            shell = Instantiate(arrow, childObj.transform.position, Quaternion.Euler(0, 140f, 0));
         }
         greenAnimator.SetTrigger("idle");
     }

@@ -6,7 +6,9 @@ public class ArrowMove : MonoBehaviour
 {
     public Rigidbody Rb;
     Vector3 moveDirection;
+    Vector3 mato;
     GameObject target;
+
     //GameObject greenObject;
 
     // Start is called before the first frame update
@@ -25,7 +27,8 @@ public class ArrowMove : MonoBehaviour
         //    moveDirection = new Vector3(-1, 0, 0);
         //}
 
-        moveDirection = target.transform.position - transform.position;
+        mato = target.transform.position + new Vector3(0, 3, 0);
+        moveDirection = mato - transform.position;
         moveDirection = Quaternion.Euler(0, 40, 0) * moveDirection;
         Rb.velocity = moveDirection;
 

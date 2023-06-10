@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BossManager : MonoBehaviour
 {
     private int rnd;
-    private int hp = 200;
+    private int hp = 500;
     private int currentHp;
     public int swordDamage = 30;
     public int magicDamage = 40;
@@ -56,6 +56,7 @@ public class BossManager : MonoBehaviour
     private string attri = "red";
 
     public PlayerManager playerManager;
+    public GameObject bossSpone;
 
     // PlayerSpriteの初期サイズを保存する変数
     Vector3 defaultLocalScale;
@@ -231,7 +232,7 @@ public class BossManager : MonoBehaviour
         }
         else if(awake == "stay")
         {
-            transform.position = new Vector3(target.transform.position.x - 6, 3, transform.position.z);
+            transform.position = bossSpone.transform.position;
         }
         else
         {

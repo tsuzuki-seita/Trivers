@@ -837,15 +837,16 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   sword: {fileID: 0}
   bossSword: {fileID: 7947155238286664812}
-  player: {fileID: 0}
-  magicAura: {fileID: 816795513458146953, guid: f02bea55a2f6348579240e93517d245f, type: 3}
+  magicAura: {fileID: 816795513458146953, guid: b3ea55cbd98a74848b6cb6a7522ac8bf, type: 3}
   magicBullet: {fileID: 8383124856027160941, guid: f543aa403a5284386a713d189a9dd230, type: 3}
   childObj: {fileID: 7947155238704438832}
   target: {fileID: 0}
   bossAnimator: {fileID: 8005277618598510678}
   slider: {fileID: 7947155237359339718}
   sliderImage: {fileID: 7947155237373633183}
+  awake: stay
   playerManager: {fileID: 0}
+  bossSpone: {fileID: 0}
 --- !u!1 &7947298721673802692
 GameObject:
   m_ObjectHideFlags: 0

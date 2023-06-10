@@ -32,7 +32,7 @@ public class PlayerManager : MonoBehaviour
     // PlayerSpriteの初期サイズを保存する変数
     Vector3 defaultLocalScale;
 
-    private int hp = 7500;
+    private int hp = 5000;
     private int currentHp;
     public int magicDamage = 40;
     public int legDamage = 20;
@@ -68,6 +68,7 @@ public class PlayerManager : MonoBehaviour
         if (hp < 0)
         {
             GameOver();
+            SceneManager.LoadScene("GameOverScene");
             playerCollider.enabled = false;
             Debug.Log("deth");
         }
@@ -265,24 +266,7 @@ public class PlayerManager : MonoBehaviour
             Destroy(collision.gameObject);
             Debug.Log("destroy");
         }
-        else if (collision.gameObject.tag == "Arrow")
-        {
-            if (attri == "red")
-            {
-                hp -= magicDamage / 2;
-            }
-            else if (attri == "blue")
-            {
-                hp -= magicDamage * 2;
-            }
-            else if (attri == "green")
-            {
-                hp -= magicDamage;
-            }
-            Destroy(collision.gameObject);
-            Debug.Log("destroy");
-        }
-        else if(collision.gameObject.tag == "BossRedSword")
+        else if (collision.gameObject.tag == "BossRedSword")
         {
             if (attri == "red")
             {
@@ -330,16 +314,34 @@ public class PlayerManager : MonoBehaviour
             }
             collision.enabled = false;
         }
+
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Arrow")
+        {
+            if (attri == "red")
+            {
+                hp -= magicDamage / 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= magicDamage * 2;
+            }
+            else if (attri == "green")
+            {
+                hp -= magicDamage;
+            }
+            Destroy(collision.gameObject);
+            Debug.Log("arrowdestroy");
+        }
+        
         slider.value = hp;
     }
 
     void GameOver()
     {
         playerAnimator.SetTrigger("die");
-        gameOver.SetActive(true);
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            SceneManager.LoadScene("Main");
-        }
     }
 }

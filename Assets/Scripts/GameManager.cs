@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         {
             blance -= Time.deltaTime;
         }
-        timerText.text = blance.ToString("f0");
+        timerText.text = "Time：" + blance.ToString("f0");
         scoreText.text = "Score：" + score.ToString("f0");
     }
 
