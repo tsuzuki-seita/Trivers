@@ -32,10 +32,12 @@ public class PlayerManager : MonoBehaviour
     // PlayerSpriteの初期サイズを保存する変数
     Vector3 defaultLocalScale;
 
-    private int hp = 5000;
+    private int hp = 4000;
     private int currentHp;
     public int magicDamage = 40;
     public int legDamage = 20;
+    public int bossSwordDamage = 20;
+    public int bossMagicDamage = 100;
     public string attri = "red";
 
     public Slider slider;
@@ -266,55 +268,56 @@ public class PlayerManager : MonoBehaviour
             Destroy(collision.gameObject);
             Debug.Log("destroy");
         }
-        else if (collision.gameObject.tag == "BossRedSword")
+        else if (collision.gameObject.tag == "BossRedMagic")
         {
             if (attri == "red")
             {
-                hp -= legDamage;
+                hp -= bossMagicDamage;
             }
             else if (attri == "blue")
             {
-                hp -= legDamage / 2;
+                hp -= bossMagicDamage / 2;
             }
             else if (attri == "green")
             {
-                hp -= legDamage * 2;
+                hp -= bossMagicDamage * 2;
             }
             collision.enabled = false;
         }
-        else if (collision.gameObject.tag == "BossBlueSword")
+        else if (collision.gameObject.tag == "BossBlueMagic")
         {
             if (attri == "red")
             {
-                hp -= magicDamage * 2;
+                hp -= bossMagicDamage * 2;
             }
             else if (attri == "blue")
             {
-                hp -= magicDamage;
+                hp -= bossMagicDamage;
             }
             else if (attri == "green")
             {
-                hp -= magicDamage / 2;
+                hp -= bossMagicDamage / 2;
             }
             collision.enabled = false;
         }
-        else if (collision.gameObject.tag == "BossGreenSword")
+        else if (collision.gameObject.tag == "BossGreenMagic")
         {
             if (attri == "red")
             {
-                hp -= magicDamage * 2;
+                hp -= bossMagicDamage / 2;
             }
             else if (attri == "blue")
             {
-                hp -= magicDamage;
+                hp -= bossMagicDamage * 2;
             }
             else if (attri == "green")
             {
-                hp -= magicDamage / 2;
+                hp -= bossMagicDamage;
             }
             collision.enabled = false;
         }
-
+        
+        slider.value = hp;
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -336,7 +339,55 @@ public class PlayerManager : MonoBehaviour
             Destroy(collision.gameObject);
             Debug.Log("arrowdestroy");
         }
-        
+        else if (collision.gameObject.tag == "BossRedSword")
+        {
+            if (attri == "red")
+            {
+                hp -= bossSwordDamage;
+            }
+            else if (attri == "blue")
+            {
+                hp -= bossSwordDamage / 2;
+            }
+            else if (attri == "green")
+            {
+                hp -= bossSwordDamage * 2;
+            }
+            //collision.enabled = false;
+        }
+        else if (collision.gameObject.tag == "BossBlueSword")
+        {
+            if (attri == "red")
+            {
+                hp -= bossSwordDamage * 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= bossSwordDamage;
+            }
+            else if (attri == "green")
+            {
+                hp -= bossSwordDamage / 2;
+            }
+            //collision.enabled = false;
+        }
+        else if (collision.gameObject.tag == "BossGreenSword")
+        {
+            if (attri == "red")
+            {
+                hp -= bossSwordDamage / 2;
+            }
+            else if (attri == "blue")
+            {
+                hp -= bossSwordDamage * 2;
+            }
+            else if (attri == "green")
+            {
+                hp -= bossSwordDamage;
+            }
+            //collision.enabled = false;
+        }
+
         slider.value = hp;
     }
 

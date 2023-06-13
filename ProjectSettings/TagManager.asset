@@ -16,6 +16,9 @@ TagManager:
   - BossRedSword
   - BossBlueSword
   - BossGreenSword
+  - BossBlueMagic
+  - BossRedMagic
+  - BossGreenMagic
   layers:
   - Default
   - TransparentFX

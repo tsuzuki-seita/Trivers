@@ -8,13 +8,14 @@ public class BossManager : MonoBehaviour
     private int rnd;
     private int hp = 500;
     private int currentHp;
-    public int swordDamage = 30;
-    public int magicDamage = 40;
+    public int swordDamage = 50;
+    public int magicDamage = 50;
 
     public GameObject gameManager;
 
     public BoxCollider sword;
-    public BoxCollider bossSword;
+    public Collider bossSwordCollider;
+    public GameObject bossSword;
 
     public GameObject magicAura;    //魔法弾オーラ
     public GameObject magicBullet;    //魔法弾prefab
@@ -140,6 +141,7 @@ public class BossManager : MonoBehaviour
                 {
                     if (timer == 0)
                     {
+                        bossSwordCollider.enabled = true;
                         if (attri == "red")
                         {
                             bossSword.tag = "BossRedSword";
@@ -152,10 +154,9 @@ public class BossManager : MonoBehaviour
                         {
                             bossSword.tag = "BossGreenSword";
                         }
-                        bossSword.enabled = true;
                         bossAnimator.SetTrigger("attack");
                     }
-                    if (timer > 1.2f)
+                    if (timer > 1.4f)
                     {
                         bossAnimator.SetTrigger("idle");
                         bossstate = BossState.Idle;
@@ -234,10 +235,10 @@ public class BossManager : MonoBehaviour
         {
             transform.position = bossSpone.transform.position;
         }
-        else
-        {
-
-        }
+        //else
+        //{
+        //    transform.position.x = bossSpone.transform.position.x;
+        //}
     }
 
     void MagicFire()
@@ -245,17 +246,17 @@ public class BossManager : MonoBehaviour
         Destroy(shellAura);
         if (attri == "red")
         {
-            magicBullet.tag = "Leg";
+            magicBullet.tag = "BossRedMagic";
             magicBullet.gameObject.GetComponent<SpriteRenderer>().color = new Color32(248, 93, 6, 255);
         }
         else if (attri == "blue")
         {
-            magicBullet.tag = "Magic";
+            magicBullet.tag = "BossBlueMagic";
             magicBullet.gameObject.GetComponent<SpriteRenderer>().color = new Color32(250, 250, 250, 255);
         }
         else if (attri == "green")
         {
-            magicBullet.tag = "Arrow";
+            magicBullet.tag = "BossGreenMagic";
             magicBullet.gameObject.GetComponent<SpriteRenderer>().color = new Color32(6, 248, 37, 255);
         }
         if (target.transform.position.x <= transform.position.x)

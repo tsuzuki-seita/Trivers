@@ -8,28 +8,29 @@ public class ArrowMove : MonoBehaviour
     Vector3 moveDirection;
     Vector3 mato;
     GameObject target;
-
-    //GameObject greenObject;
+    Vector3 angle;
 
     // Start is called before the first frame update
     void Start()
     {
+        Transform arrowTransform = this.transform;
         target = GameObject.Find("Player");
-        //greenObject = GameObject.Find("Peasant");
         Rb = this.gameObject.GetComponent<Rigidbody>();
 
-        //if (target.transform.position.x >= blueObject.transform.position.x)
-        //{
-        //    moveDirection = new Vector3(1, 0, 0);
-        //}
-        //else
-        //{
-        //    moveDirection = new Vector3(-1, 0, 0);
-        //}
-
-        mato = target.transform.position + new Vector3(0, 3, 0);
+        mato = target.transform.position + new Vector3(0, 3, 0);    //????????????
         moveDirection = mato - transform.position;
-        moveDirection = Quaternion.Euler(0, 40, 0) * moveDirection;
+
+        angle = this.transform.localEulerAngles;
+
+        if (target.transform.position.x <= transform.position.x)
+        {
+            angle.z = 90;
+        }
+        else
+        {
+            angle.z = -90;
+        }
+        this.transform.localEulerAngles = angle;
         Rb.velocity = moveDirection;
 
         Rb.velocity *= 2;

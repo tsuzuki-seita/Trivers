@@ -134,7 +134,7 @@ public class GreenEnemyManager : MonoBehaviour
         }
         else
         {
-            shell = Instantiate(arrow, childObj.transform.position, Quaternion.Euler(0, 140f, 0));
+            shell = Instantiate(arrow, childObj.transform.position, Quaternion.Euler(0, -50, 0));
         }
         greenAnimator.SetTrigger("idle");
     }
