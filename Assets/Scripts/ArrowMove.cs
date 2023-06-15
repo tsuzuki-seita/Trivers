@@ -24,11 +24,12 @@ public class ArrowMove : MonoBehaviour
 
         if (target.transform.position.x <= transform.position.x)
         {
-            angle.z = 90;
+            //angle.z = 90;
         }
         else
         {
-            angle.z = -90;
+            //angle.z = -90;
+            GetComponent<SpriteRenderer>().flipY = true;
         }
         this.transform.localEulerAngles = angle;
         Rb.velocity = moveDirection;
