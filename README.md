@@ -3,7 +3,7 @@
 "Tri Vers" is a 2D action game in which the player fights using three attributes..
 
 # DEMO
-![](https://cpp-learning.com/wp-content/uploads/2019/05/pyxel-190505-161951.gif)
+![Monosnap screencast 2024-07-01 13-48-05](https://github.com/tsuzuki-seita/Trivers/assets/131642694/bca4733f-ce92-4585-991c-81ebc12fa9e8)
 
 Players can switch between attributes at any time.
 The enemies are three different enemy mobs for each of the three attributes.
