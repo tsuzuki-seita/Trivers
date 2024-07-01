@@ -13,6 +13,18 @@ The enemies are three different enemy mobs for each of the three attributes.
 Enemy movement is achieved using state-based AI.
 This has enabled the movement of the enemy to change according to the situation.
 
+# Requirement
+
+* Unity 2020.2.7f1
+
+# Note
+
+I don't test environments under Linux and Windows.
+
+# Author
+
+* Tsuzuki Seita
+
 Enjoy making cute physics simulations!
 
 Thank you!
