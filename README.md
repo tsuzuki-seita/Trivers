@@ -25,6 +25,6 @@ I don't test environments under Linux and Windows.
 
 * Tsuzuki Seita
 
-Enjoy making cute physics simulations!
+Enjoy strategic tactics by changing attributes!
 
 Thank you!
